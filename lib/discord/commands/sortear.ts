@@ -17,8 +17,8 @@ function formatTeams(jugadores: string[]): string {
 
   return (
     `🎮 **CS2 - Sorteo de Equipos** 🎮\n\n` +
-    `**🔴 Terroristas (T):**\n- ${equipo1.join("\n- ")}\n\n` +
-    `**🔵 Contra-Terroristas (CT):**\n- ${equipo2.join("\n- ")}`
+    `**🔴 Terrorists (T):**\n- ${equipo1.join("\n- ")}\n\n` +
+    `**🔵 Counter-Terrorists (CT):**\n- ${equipo2.join("\n- ")}`
   );
 }
 
