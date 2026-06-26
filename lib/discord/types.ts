@@ -4,6 +4,15 @@ export interface DiscordInteraction {
     name: string;
     options?: { name: string; value: unknown }[];
   };
+  member?: {
+    user?: {
+      id: string;
+    };
+  };
+  user?: {
+    id: string;
+  };
+  guild_id?: string;
 }
 
 export interface DiscordResponse {

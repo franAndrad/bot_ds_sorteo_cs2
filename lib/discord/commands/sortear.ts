@@ -10,22 +10,32 @@ function shuffle<T>(array: T[]): T[] {
   return arr;
 }
 
+function sanitizeName(name: string): string {
+  return name
+    .replace(/@everyone/g, "@\u200Beveryone")
+    .replace(/@here/g, "@\u200Bhere")
+    .replace(/<@!?(\d+)>/g, "<@\u200B$1>")
+    .replace(/<@&(\d+)>/g, "<@\u200B&$1>");
+}
+
 function formatTeams(jugadores: string[]): string {
   const mezclados = shuffle(jugadores);
   const equipo1 = mezclados.slice(0, 5);
   const equipo2 = mezclados.slice(5, 10);
+  const sanitized1 = equipo1.map(sanitizeName);
+  const sanitized2 = equipo2.map(sanitizeName);
 
   return (
     `🎮 **CS2 - Sorteo de Equipos** 🎮\n\n` +
-    `**🔴 Terrorists (T):**\n- ${equipo1.join("\n- ")}\n\n` +
-    `**🔵 Counter-Terrorists (CT):**\n- ${equipo2.join("\n- ")}`
+    `**🔴 Terrorists (T):**\n- ${sanitized1.join("\n- ")}\n\n` +
+    `**🔵 Counter-Terrorists (CT):**\n- ${sanitized2.join("\n- ")}`
   );
 }
 
 export function handleSortear(interaction: DiscordInteraction): Response {
-  const jugadoresInput = interaction.data?.options?.[0]?.value as string | undefined;
+  const jugadoresInput = interaction.data?.options?.[0]?.value;
 
-  if (!jugadoresInput) {
+  if (typeof jugadoresInput !== "string") {
     return message("⚠️ Debes proporcionar una lista de participantes separados por comas.", true);
   }
 
@@ -41,5 +51,10 @@ export function handleSortear(interaction: DiscordInteraction): Response {
     );
   }
 
-  return message(formatTeams(jugadores));
+  const formatted = formatTeams(jugadores);
+  if (formatted.length > 1900) {
+    return message("⚠️ Los nombres de los jugadores son demasiado largos. Usa nombres más cortos.", true);
+  }
+
+  return message(formatted);
 }
