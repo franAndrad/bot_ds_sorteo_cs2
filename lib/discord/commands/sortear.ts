@@ -16,9 +16,9 @@ function formatTeams(jugadores: string[]): string {
   const equipo2 = mezclados.slice(5, 10);
 
   return (
-    `🎮 **Sorteo de Equipos** 🎮\n\n` +
-    `**🔴 Equipo 1:**\n- ${equipo1.join("\n- ")}\n\n` +
-    `**🔵 Equipo 2:**\n- ${equipo2.join("\n- ")}`
+    `🎮 **CS2 - Sorteo de Equipos** 🎮\n\n` +
+    `**🔴 Terroristas (T):**\n- ${equipo1.join("\n- ")}\n\n` +
+    `**🔵 Contra-Terroristas (CT):**\n- ${equipo2.join("\n- ")}`
   );
 }
 
